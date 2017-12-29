@@ -6,6 +6,7 @@ const Product = require('../models/product');
 
 // Routes
 
+// Get all products
 router.get('/', (req, res, next) => {
     Product.find().exec()
         .then(doc => {
@@ -18,6 +19,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
+// Get a product by id
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id).exec()
@@ -31,8 +33,11 @@ router.get('/:productId', (req, res, next) => {
         });
 });
 
+// Create a new product with a auto generated id.
+// The body of the request must use the following structure:
+// { "name": "name of the product", "price": "19.99" },
+// values as examples.
 router.post('/', (req, res, next) => {
-
     const product = new Product({
         _id: mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -53,7 +58,12 @@ router.post('/', (req, res, next) => {
         });
 });
 
-
+// Receive a PATCH request and update the product.
+// The id must be specified in the url - "/product/productid8316"
+// The body must use an json array as the following:
+// [
+//      { "propName": "changedProperty", "value": "newValue" },
+// ]
 router.patch('/:productId', (req, res, next) => {
     const id = req.params.productId;
     const updateOps = {};
@@ -71,6 +81,7 @@ router.patch('/:productId', (req, res, next) => {
         });
 });
 
+// Delete product by id
 router.delete('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.remove({ _id: id }).exec()
