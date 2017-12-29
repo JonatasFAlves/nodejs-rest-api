@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 productRoutes = require('./api/routes/products');
 orderRoutes = require('./api/routes/orders');
+
+mongoose.connect('mongodb://localhost/node-rest-shop')
+    .then(res => console.log('db ok'))
+    .catch(err => console.log(err));
 
 // Added npm morgan as a logging tool
 app.use(morgan('dev'));
