@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/node-rest-shop')
 
 // Added npm morgan as a logging tool
 app.use(morgan('dev'));
-// Added npm body-parser to better access request with body
+// Added npm body-parser to better access requests with body
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
 
-    // If browser is asking what types of request we accept
+    // If browser asks what types of request we accept
     if (req.header === 'OPTIONS') {
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
         return res.status(200).json({});
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     next(error);
 });
 
-// If application has a error
+// If application has an error
 app.use((error, req, res, next) => {
     res.status(error.status || 500);
     res.json({
